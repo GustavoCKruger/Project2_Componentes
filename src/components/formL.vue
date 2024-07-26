@@ -14,37 +14,6 @@ const usuario = ref({
     bio: ''
 })
 
-
-const estados = [
-    { uf: 'AC', nome: 'Acre' },
-    { uf: 'AL', nome: 'Alagoas' },
-    { uf: 'AP', nome: 'Amapá' },
-    { uf: 'AM', nome: 'Amazonas' },
-    { uf: 'BA', nome: 'Bahia' },
-    { uf: 'CE', nome: 'Ceará' },
-    { uf: 'DF', nome: 'Distrito Federal' },
-    { uf: 'ES', nome: 'Espírito Santo' },
-    { uf: 'GO', nome: 'Goiás' },
-    { uf: 'MA', nome: 'Maranhão' },
-    { uf: 'MT', nome: 'Mato Grosso' },
-    { uf: 'MS', nome: 'Mato Grosso do Sul' },
-    { uf: 'MG', nome: 'Minas Gerais' },
-    { uf: 'PA', nome: 'Pará' },
-    { uf: 'PB', nome: 'Paraíba' },
-    { uf: 'PR', nome: 'Paraná' },
-    { uf: 'PE', nome: 'Pernambuco' },
-    { uf: 'PI', nome: 'Piauí' },
-    { uf: 'RJ', nome: 'Rio de Janeiro' },
-    { uf: 'RN', nome: 'Rio Grande do Norte' },
-    { uf: 'RS', nome: 'Rio Grande do Sul' },
-    { uf: 'RO', nome: 'Rondônia' },
-    { uf: 'RR', nome: 'Roraima' },
-    { uf: 'SC', nome: 'Santa Catarina' },
-    { uf: 'SP', nome: 'São Paulo' },
-    { uf: 'SE', nome: 'Sergipe' },
-    { uf: 'TO', nome: 'Tocantins' }
-]
-
 </script>
 
 <template>
@@ -52,12 +21,7 @@ const estados = [
     <div class="container">
         <main>
             <h1>Editor de Perfil</h1>
-            <transition name="form" mode="out-in">
-                <section v-if="mostrarPerfil">
-                    <p v-for="(value, key) of usuario" :key="key">{{ key }}: {{ value }}</p>
-                    <button class="btn btn-info" @click="mostrarPerfil = false">Esconder</button>
-                </section>
-                <form v-else class="form" @submit.prevent="salvarPerfil()" validate>
+            <form @submit.prevent="enviarDados">
                     <div class="row">
                         <label for="nomeField" class="formLabel">Nome</label>
                         <br>
@@ -89,9 +53,33 @@ const estados = [
                         <br>
                         <select class="form-select" id="estadoField" v-model="usuario.estado">
                             <option selected disabled value="">Selecionar...</option>
-                            <option v-for="estado of estados" :key="estado.uf" :value="estado.uf">
-                                {{ estado.nome }}
-                            </option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
                         </select>
                     </div>
                     <div class="lista">
@@ -127,7 +115,6 @@ const estados = [
                         <button class="botao" type="submit">Enviar</button>
                     </div>
                 </form>
-            </transition>
         </main>
     </div>
 </template>
@@ -191,8 +178,5 @@ button {
     transition: opacidade 0.5s ease;
 }
 
-.form-enter-from,
-.form-leave-to {
-    opacidade: 0;
-}
+
 </style>
