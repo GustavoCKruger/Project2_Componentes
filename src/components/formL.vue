@@ -1,18 +1,21 @@
 <script setup>
 import { ref } from 'vue'
 
+const props = defineProps([
+    'dados'
+])
 const usuario = ref({
-    nome: '',
-    senha: '',
-    confirmSenha: '',
-    email: '',
-    cidade: '',
-    estado: '',
-    avatar: '',
-    hobbies: [],
-    linguagemPref: '',
-    bio: ''
+    ...props.dados,
+    hobbies: []
 })
+
+const emits = defineEmits([
+    'submit'
+])
+
+function enviarDados() {
+    emits('submit', usuario.value)
+}
 
 </script>
 
@@ -22,99 +25,97 @@ const usuario = ref({
         <main>
             <h1>Editor de Perfil</h1>
             <form @submit.prevent="enviarDados">
-                    <div class="row">
-                        <label for="nomeField" class="formLabel">Nome</label>
-                        <br>
-                        <input type="text" class="formInput" id="nome" v-model="usuario.nome" required />
+                <div class="row">
+                    <label for="nomeField" class="formLabel">Nome</label>
+                    <br>
+                    <input type="text" class="formInput" id="nome" v-model="usuario.nome" required />
+                </div>
+                <div class="row">
+                    <label for="emailField" class="formLabel">E-mail</label>
+                    <div class="input-group">
+                        <input type="email" class="formInput" id="email" v-model="usuario.email" required />
                     </div>
                     <div class="row">
-                        <label for="emailField" class="formLabel">E-mail</label>
-                        <div class="input-group">
-                            <input type="email" class="formInput" id="email" v-model="usuario.email" required />
-                        </div>
-                        <div class="row">
-                            <label for="senha">Senha</label>
-                            <br>
-                            <input type="password" id="senha" v-model="usuario.senha" required>
-                        </div>
-                        <div class="row">
-                            <label for="confirmSenha">Confirme a senha</label>
-                            <br>
-                            <input type="password" id="confirmSenha" v-model="usuario.confirmSenha" required>
-                        </div>
-                    </div>
-                    <div class="select">
-                        <label for="cidadeField" class="formLabel">Cidade</label>
+                        <label for="senha">Senha</label>
                         <br>
-                        <input type="text" class="formInput" id="cidadeField" v-model="usuario.cidade" required>
+                        <input type="password" id="senha" v-model="usuario.senha" required>
                     </div>
-                    <div class="select">
-                        <label for="estadoField" class="formLabel">Estado</label>
+                    <div class="row">
+                        <label for="confirmSenha">Confirme a senha</label>
                         <br>
-                        <select class="form-select" id="estadoField" v-model="usuario.estado">
-                            <option selected disabled value="">Selecionar...</option>
-                            <option value="AC">Acre</option>
-                            <option value="AL">Alagoas</option>
-                            <option value="AP">Amapá</option>
-                            <option value="AM">Amazonas</option>
-                            <option value="BA">Bahia</option>
-                            <option value="CE">Ceará</option>
-                            <option value="DF">Distrito Federal</option>
-                            <option value="ES">Espírito Santo</option>
-                            <option value="GO">Goiás</option>
-                            <option value="MA">Maranhão</option>
-                            <option value="MT">Mato Grosso</option>
-                            <option value="MS">Mato Grosso do Sul</option>
-                            <option value="MG">Minas Gerais</option>
-                            <option value="PA">Pará</option>
-                            <option value="PB">Paraíba</option>
-                            <option value="PR">Paraná</option>
-                            <option value="PE">Pernambuco</option>
-                            <option value="PI">Piauí</option>
-                            <option value="RJ">Rio de Janeiro</option>
-                            <option value="RN">Rio Grande do Norte</option>
-                            <option value="RS">Rio Grande do Sul</option>
-                            <option value="RO">Rondônia</option>
-                            <option value="RR">Roraima</option>
-                            <option value="SC">Santa Catarina</option>
-                            <option value="SP">São Paulo</option>
-                            <option value="SE">Sergipe</option>
-                            <option value="TO">Tocantins</option>
-                        </select>
+                        <input type="password" id="confirmSenha" v-model="usuario.confirmSenha" required>
                     </div>
-                    <div class="lista">
-                        <p class="selected">Hobbies</p>
-                        <input class="check" type="checkbox" id="hobbies" value="esportes" v-model="usuario.hobbies" />
-                        <label for="hobbies">Esportes</label>
-                        <input class="check" type="checkbox" id="hobbies" value="música" v-model="usuario.hobbies" />
-                        <label for="hobbies">Música</label>
-                        <input class="check" type="checkbox" id="hobbies" value="viagens" v-model="usuario.hobbies" />
-                        <label for="hobbies">Viagens</label>
-                        <input class="check" type="checkbox" id="hobbies" value="leitura" v-model="usuario.hobbies" />
-                        <label for="hobbies">Leitura</label>
-                    </div>
-                    <div class="lista">
-                        <p class="selected">Linguagem preferida</p>
-                        <input class="check" type="radio" v-model="usuario.linguagemPref" value="C" id="langC" />
-                        <label for="langC">C</label>
-                        <input class="check" type="radio" v-model="usuario.linguagemPref" value="Java" id="langJava" />
-                        <label for="langJava">Java</label>
-                        <input class="check" type="radio" v-model="usuario.linguagemPref" value="Python"
-                            id="langPython" />
-                        <label for="langPython">Python</label>
-                        <input class="check" type="radio" v-model="usuario.linguagemPref" value="Javascript"
-                            id="langJs" />
-                        <label for="langJs">JavaScript</label>
-                    </div>
-                    <div class="select">
-                        <label for="biografia">Biografia</label>
-                        <br>
-                        <input type="text" id="biografia" v-model="usuario.bio" required>
-                    </div>
-                    <div class="botao">
-                        <button class="botao" type="submit">Enviar</button>
-                    </div>
-                </form>
+                </div>
+                <div class="select">
+                    <label for="cidadeField" class="formLabel">Cidade</label>
+                    <br>
+                    <input type="text" class="formInput" id="cidadeField" v-model="usuario.cidade" required>
+                </div>
+                <div class="select">
+                    <label for="estadoField" class="formLabel">Estado</label>
+                    <br>
+                    <select class="form-select" id="estadoField" v-model="usuario.estado">
+                        <option selected disabled value="">Selecionar...</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                </div>
+                <div class="lista">
+                    <p class="selected">Hobbies</p>
+                    <input class="check" type="checkbox" id="hobbies" value="esportes" v-model="usuario.hobbies" />
+                    <label for="hobbies">Esportes</label>
+                    <input class="check" type="checkbox" id="hobbies" value="música" v-model="usuario.hobbies" />
+                    <label for="hobbies">Música</label>
+                    <input class="check" type="checkbox" id="hobbies" value="viagens" v-model="usuario.hobbies" />
+                    <label for="hobbies">Viagens</label>
+                    <input class="check" type="checkbox" id="hobbies" value="leitura" v-model="usuario.hobbies" />
+                    <label for="hobbies">Leitura</label>
+                </div>
+                <div class="lista">
+                    <p class="selected">Linguagem preferida</p>
+                    <input class="check" type="radio" v-model="usuario.linguagemPref" value="C" id="langC" />
+                    <label for="langC">C</label>
+                    <input class="check" type="radio" v-model="usuario.linguagemPref" value="Java" id="langJava" />
+                    <label for="langJava">Java</label>
+                    <input class="check" type="radio" v-model="usuario.linguagemPref" value="Python" id="langPython" />
+                    <label for="langPython">Python</label>
+                    <input class="check" type="radio" v-model="usuario.linguagemPref" value="Javascript" id="langJs" />
+                    <label for="langJs">JavaScript</label>
+                </div>
+                <div class="select">
+                    <label for="biografia">Biografia</label>
+                    <br>
+                    <input type="text" id="biografia" v-model="usuario.bio" required>
+                </div>
+                <div class="botao">
+                    <button class="botao" type="submit">Enviar</button>
+                </div>
+            </form>
         </main>
     </div>
 </template>
@@ -177,6 +178,4 @@ button {
 .form-leave-active {
     transition: opacidade 0.5s ease;
 }
-
-
 </style>
